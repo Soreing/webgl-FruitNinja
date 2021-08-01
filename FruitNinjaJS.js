@@ -29,40 +29,40 @@ window.onload = async function setup()
 	Framework.Start();
 	
 	//Load textures
-	Framework.LoadTexture("resources/Textures/sky.png");
-	Framework.LoadTexture("resources/Textures/GameTexture.png");
-	Framework.LoadTexture("resources/Textures/StarCursor.png");
-	Framework.LoadTexture("resources/Textures/Rainbow.png");
-	Framework.LoadTexture("resources/Textures/FruitNinjaBackground.png");
-	Framework.LoadTexture("resources/Textures/PineappleTexture.png");
-	Framework.LoadTexture("resources/Textures/PomegranateTexture.png");
-	Framework.LoadTexture("resources/Textures/Splat1.png");
-	Framework.LoadTexture("resources/Textures/Splat2.png");
-	Framework.LoadTexture("resources/Textures/Splat3.png");
-	Framework.LoadTexture("resources/Textures/FruitSmoke.png");
-	Framework.LoadTexture("resources/Textures/Sparkle2.png");
-	Framework.LoadTexture("resources/Textures/Smoke.png");
-	Framework.LoadTexture("resources/Textures/Miss.png");
-	Framework.LoadTexture("resources/Textures/PSparkle.png");
-	Framework.LoadTexture("resources/Textures/black.png");
-	Framework.LoadTexture("resources/Textures/banana_left_texture.png");
-	Framework.LoadTexture("resources/Textures/banana_right_texture.png");
-	Framework.LoadTexture("resources/Textures/bomb_texture_left.png");
-	Framework.LoadTexture("resources/Textures/bomb_texture_right.png");
-	Framework.LoadTexture("resources/Textures/Instruction1.png");
-	Framework.LoadTexture("resources/Textures/Instruction2.png");
-	Framework.LoadTexture("resources/Textures/Beam.png");
+	Framework.LoadTexture("Resources/Textures/sky.png");
+	Framework.LoadTexture("Resources/Textures/GameTexture.png");
+	Framework.LoadTexture("Resources/Textures/StarCursor.png");
+	Framework.LoadTexture("Resources/Textures/Rainbow.png");
+	Framework.LoadTexture("Resources/Textures/FruitNinjaBackground.png");
+	Framework.LoadTexture("Resources/Textures/PineappleTexture.png");
+	Framework.LoadTexture("Resources/Textures/PomegranateTexture.png");
+	Framework.LoadTexture("Resources/Textures/Splat1.png");
+	Framework.LoadTexture("Resources/Textures/Splat2.png");
+	Framework.LoadTexture("Resources/Textures/Splat3.png");
+	Framework.LoadTexture("Resources/Textures/FruitSmoke.png");
+	Framework.LoadTexture("Resources/Textures/Sparkle2.png");
+	Framework.LoadTexture("Resources/Textures/Smoke.png");
+	Framework.LoadTexture("Resources/Textures/Miss.png");
+	Framework.LoadTexture("Resources/Textures/PSparkle.png");
+	Framework.LoadTexture("Resources/Textures/black.png");
+	Framework.LoadTexture("Resources/Textures/banana_left_texture.png");
+	Framework.LoadTexture("Resources/Textures/banana_right_texture.png");
+	Framework.LoadTexture("Resources/Textures/bomb_texture_left.png");
+	Framework.LoadTexture("Resources/Textures/bomb_texture_right.png");
+	Framework.LoadTexture("Resources/Textures/Instruction1.png");
+	Framework.LoadTexture("Resources/Textures/Instruction2.png");
+	Framework.LoadTexture("Resources/Textures/Beam.png");
 	 
 	//Load audios
-	Framework.LoadAudio("resources/Audio/RainyBGM.mp3");
-	Framework.LoadAudio("resources/Audio/Cut.mp3");
-	Framework.LoadAudio("resources/Audio/Splash.mp3");
-	Framework.LoadAudio("resources/Audio/FruitThrow.mp3");
-	Framework.LoadAudio("resources/Audio/Bomb.mp3");
-	Framework.LoadAudio("resources/Audio/HealthLose.mp3");
-	Framework.LoadAudio("resources/Audio/Start.mp3");
-	Framework.LoadAudio("resources/Audio/GameOver.mp3");
-	Framework.LoadAudio("resources/Audio/Explosion.mp3");
+	Framework.LoadAudio("Resources/Audio/RainyBGM.mp3");
+	Framework.LoadAudio("Resources/Audio/Cut.mp3");
+	Framework.LoadAudio("Resources/Audio/Splash.mp3");
+	Framework.LoadAudio("Resources/Audio/FruitThrow.mp3");
+	Framework.LoadAudio("Resources/Audio/Bomb.mp3");
+	Framework.LoadAudio("Resources/Audio/HealthLose.mp3");
+	Framework.LoadAudio("Resources/Audio/Start.mp3");
+	Framework.LoadAudio("Resources/Audio/GameOver.mp3");
+	Framework.LoadAudio("Resources/Audio/Explosion.mp3");
 
 //--------------------CREATING A SCENE--------------------//
 	
