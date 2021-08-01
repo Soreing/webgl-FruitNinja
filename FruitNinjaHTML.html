@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+		<meta content="utf-8" http-equiv="encoding">
+		
+		<!--Monospace Style-->
+		<style> div    {font-family: "Courier New", Times, monospace;} </style>
+		
+		<!--Instructions-->
+		<div> 
+					</br> <b>Instructions:</b> Click on the canvas and drag around the mouse to make cuts.</br>
+					Drag the mouse through the fruits to cut them into pieces.</br>
+		</div>
+		
+		<div> <b> <font size="3" color="black" face="verdana">FPS: <label id="fpsCounter">0</label></font> </b></div>
+		
+		<!--Shading Engine supports up to 100 objects with Local and World Transforms linked by an index-->
+		<!--The Engine has 1 camera with its own transform and viewing settings aplied for all objects  -->
+		<!--At most 10 light sources are supported with shading applied to all objects in the scene     -->
+	
+		<!--Vertex Shader-->
+		<script id="vertexShader" type="x-shader/x-vertex">
+		//Vertex shader attributes
+		attribute vec4 veCoords;
+		attribute vec4 veColors;
+		attribute vec3 veNormal;
+		attribute vec2 veTexCor;
+		
+		//Transformation
+		uniform mat4 pivotTransf;
+		uniform mat4 localCamera;
+		uniform mat4 worldCamera;
+		uniform mat4 localParent;
+		uniform mat4 worldParent;
+		uniform mat4 localTransf;
+		uniform mat4 worldTransf;
+		uniform mat4 projection;
+		
+		//Color and shading 
+		uniform vec4  diffuse;
+		uniform vec4  specular;
+		uniform vec4  ambient;
+		uniform float shininess;
+		
+		//Lighting
+		uniform vec4 lightPosition;
+		
+		//Object Type
+		uniform float type;
+		
+		//Fragment shader varying variables
+		varying vec4 frColors;
+		varying vec2 frTexCor;
+
+		void main()
+		{
+			//Position of the vertex after ModelView transformation
+			vec4 position = localCamera *  worldCamera * worldParent * localParent * worldTransf * localTransf * pivotTransf * veCoords;
+			//vec4 position = worldCamera *  localCamera * worldTransf * localTransf * veCoords;
+			gl_Position = type == 0.0 ? projection * position : projection *  worldParent * localParent * worldTransf * localTransf * pivotTransf * veCoords;
+			
+			if(type > 0.0)
+				frColors = veColors * ambient;
+			else
+			{
+				//Position of the light and the vertex
+				vec3 point = position.xyz;
+				vec3 light = lightPosition.xyz;
+				
+				//Lighting vectors
+				vec3 L = normalize( light - point );
+				vec3 E = normalize( -point );
+				vec3 H = normalize( L + E );
+				
+				//Transforming the normal
+				vec4 NN = worldCamera *  localCamera * worldParent * localParent * worldTransf * localTransf * pivotTransf * vec4(veNormal,0);
+				vec3 N  = normalize( NN.xyz );
+				
+				//Computing shading properties
+				vec4 ambientP = ambient;
+				vec4 diffuseP = max( dot(L, N), 0.0 ) * diffuse;
+				vec4 specularP = pow( max(dot(N, H), 0.0), shininess ) * specular;
+				if( dot(L, N) < 0.0 ) { specularP = vec4(0.0, 0.0, 0.0, 1.0); }
+				
+				
+				//Passing values to the fragment shader
+				frColors = veColors * ambientP + diffuseP + specularP;
+				//frColors = vec4(N,1);
+				frColors.a = ambient.a;
+			}
+			
+			frTexCor = veTexCor;
+		}
+		</script>
+
+		<!--Fragment Shader-->
+		<script id="fragmentShader" type="x-shader/x-fragment">
+		precision mediump float;
+
+		varying vec4 frColors;
+		varying vec2 frTexCor;
+		
+		uniform float textured;
+		
+		uniform sampler2D texture;
+
+		void main()
+		{
+			vec4 texture = textured >= 0.0 ? texture2D(texture,  frTexCor) : vec4(1,1,1,1);
+			gl_FragColor = frColors * texture;
+
+		}
+		</script>
+		
+	<!--WebGL Dependencies-->
+		<script type="text/javascript" src="Common/webgl-utils.js"></script>
+		<script type="text/javascript" src="Common/initShaders.js"></script>
+	<!--Mesh Primitives-->
+		<script type="text/javascript" src="Meshes/Primitives.js"></script>
+		<script type="text/javascript" src="Meshes/Interfaces.js"></script>
+		<script type="text/javascript" src="Meshes/Pineapple.js"></script>
+		<script type="text/javascript" src="Meshes/Pomegranate.js"></script>
+		<script type="text/javascript" src="Meshes/Bomb.js"></script>
+		<script type="text/javascript" src="Meshes/Banana.js"></script>
+	<!--Engine Utility Classes-->
+		<script type="text/javascript" src="Engine/Math.js"></script>
+		<script type="text/javascript" src="Engine/Vector3.js"></script>
+		<script type="text/javascript" src="Engine/Matrix4.js"></script>
+		<script type="text/javascript" src="Engine/Color.js"></script>
+	<!--Object Properties-->
+		<script type="text/javascript" src="Engine/Transform.js"></script>
+		<script type="text/javascript" src="Engine/Physics.js"></script>
+		<script type="text/javascript" src="Engine/Material.js"></script>
+	<!--Engine Objects-->
+		<script type="text/javascript" src="Engine/GraphicsObject.js"></script>
+		<script type="text/javascript" src="Engine/Camera.js"></script>
+	<!--Core Rendering Engine-->
+		<script type="text/javascript" src="Engine/Engine.js"></script>
+	<!--Behaviour Scripts-->
+		<script type="text/javascript" src="resources/Scripts/ShowInfo.js"></script>
+		<script type="text/javascript" src="resources/Scripts/Rotate.js"></script>
+		<script type="text/javascript" src="resources/Scripts/TimedDelete.js"></script>
+		<script type="text/javascript" src="resources/Scripts/SkyBehaviour.js"></script>
+		<script type="text/javascript" src="resources/Scripts/FPSCounter.js"></script>
+		<script type="text/javascript" src="resources/Scripts/MouseTrack.js"></script>
+		<script type="text/javascript" src="resources/Scripts/MouseTrail.js"></script>
+		<script type="text/javascript" src="resources/Scripts/WorldRotate.js"></script>
+		<script type="text/javascript" src="resources/Scripts/PineappleBehaviour.js"></script>
+		<script type="text/javascript" src="resources/Scripts/PomegranateBehaviour.js"></script>
+		<script type="text/javascript" src="resources/Scripts/Game.js"></script>
+		<script type="text/javascript" src="resources/Scripts/FadeDisappear.js"></script>
+		<script type="text/javascript" src="resources/Scripts/ShrinkDisappear.js"></script>
+		<script type="text/javascript" src="resources/Scripts/BurstBottomAll.js"></script>
+		<script type="text/javascript" src="resources/Scripts/BurstBottomOne.js"></script>
+		<script type="text/javascript" src="resources/Scripts/PauseBehaviour.js"></script>
+		<script type="text/javascript" src="resources/Scripts/ResumeBehaviour.js"></script>
+		<script type="text/javascript" src="resources/Scripts/CloseBehaviour.js"></script>
+		<script type="text/javascript" src="resources/Scripts/MusicBehaviour.js"></script>
+		<script type="text/javascript" src="resources/Scripts/SoundBehaviour.js"></script>
+		<script type="text/javascript" src="resources/Scripts/RestartBehaviour.js"></script>
+		<script type="text/javascript" src="resources/Scripts/CameraTransition.js"></script>
+		<script type="text/javascript" src="resources/Scripts/SpawnSplash.js"></script>
+		<script type="text/javascript" src="resources/Scripts/CameraScale.js"></script>
+		<script type="text/javascript" src="resources/Scripts/BombBehaviour.js"></script>
+		<script type="text/javascript" src="resources/Scripts/BananaBehaviour.js"></script>
+		<script type="text/javascript" src="resources/Scripts/Explosion.js"></script>
+		
+	<!--Driver Script-->
+		<script type="text/javascript" src="FruitNinjaJS.js"></script>
+		
+	</head>
+
+	<body>
+	<!--Content Canvas-->
+		<canvas id="Canvas" width="1280" height="720" style = "cursor: none; background: black;"></canvas>
+	</body>
+</html>
