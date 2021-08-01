@@ -32,7 +32,7 @@ window.onload = async function setup()
 	Framework.LoadTexture("Resources/Textures/sky.png");
 	Framework.LoadTexture("Resources/Textures/GameTexture.png");
 	Framework.LoadTexture("Resources/Textures/StarCursor.png");
-	Framework.LoadTexture("Resources/Textures/Rainbow.png");
+	Framework.LoadTexture("Resources/Textures/rainbow.png");
 	Framework.LoadTexture("Resources/Textures/FruitNinjaBackground.png");
 	Framework.LoadTexture("Resources/Textures/PineappleTexture.png");
 	Framework.LoadTexture("Resources/Textures/PomegranateTexture.png");
