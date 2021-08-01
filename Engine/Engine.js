@@ -128,9 +128,7 @@ function Engine()
 		
 		En.canvas.onmousemove = function(evt)
 		{
-			//console.out("hi");
 			var rect = En.canvas.getBoundingClientRect();
-			//console.log(evt.clientX);
 			if(rect.x==undefined)
 			{
 				var X= (evt.clientX-rect.left)/(rect.width/2)-1;
@@ -145,7 +143,26 @@ function Engine()
 			En.mouseDeltaY= Y-En.mousePosY; 
 			En.mousePosX = X;
 			En.mousePosY = Y;
-			//console.log(En.mouseDeltaX);
+		};
+		
+		En.canvas.ontouchmove = function(evt)
+		{
+			var touch = evt.changedTouches[0];
+			var rect = En.canvas.getBoundingClientRect();
+			if(rect.x==undefined)
+			{
+				var X= (touch.clientX-rect.left)/(rect.width/2)-1;
+				var Y= (touch.clientY-rect.top)/(-rect.height/2)+1;
+			}
+			else
+			{
+				var X= (touch.clientX-rect.x)/(rect.width/2)-1;
+				var Y= (touch.clientY-rect.y)/(-rect.height/2)+1;
+			}
+			En.mouseDeltaX= X-En.mousePosX; 
+			En.mouseDeltaY= Y-En.mousePosY; 
+			En.mousePosX = X;
+			En.mousePosY = Y;
 		};
 		
 		En.canvas.onmousedown = function(evt)
@@ -154,10 +171,23 @@ function Engine()
 			En.mouse     [evt.button] = true;
 		};
 		
+		En.canvas.ontouchstart = function(evt)
+		{
+			console.log(evt);
+			En.mouseDown [0] = true;
+			En.mouse     [0] = true;
+		};
+		
 		En.canvas.onmouseup = function(evt)
 		{
 			En.mouseUp [evt.button] = true;
 			En.mouse   [evt.button] = false;
+		};
+		
+		En.canvas.ontouchend = function(evt)
+		{
+			En.mouseUp [0] = true;
+			En.mouse   [0] = false;
 		};
 		
 		//Locate Vertex Shader attribute locations
